@@ -1,0 +1,59 @@
+﻿@model IEnumerable<DashDocs.Models.Document>
+
+@{
+    ViewBag.Title = "Home Page";
+}
+
+<div class="col-md-12 no-padding">
+    @using (Html.BeginForm("Upload", "Home", FormMethod.Post, new
+    {
+        enctype = "multipart/form-data"
+    }))
+    {
+        <div class="form-group padding-top-25">
+            <label class="control-label ">Document</label>
+            <div class="col-md-12 no-padding">
+                <input type="file" name="document" id="document" />
+            </div>
+        </div>
+        <div class="form-group">
+            <div class="col-md-10 padding-tb-15">
+                <input type="submit" value="Upload" class="btn btnprimary" />
+            </div>
+        </div>
+
+        <div class="clearfix"></div>
+        
+        //Download
+        <div class="col-md-12 div-table">
+            <h2>Recent Documents</h2>
+            <table class="table table-hover">
+                <tr>
+                    <th>
+                        Document Name
+                    </th>
+                    <th>
+                        Owner
+                    </th>
+                    <th></th>
+                </tr>
+                <tbody>
+                    @foreach (var item in Model)
+                    {
+                        <tr>
+                            <td>
+                                @Html.DisplayFor(modelItem => item.DocumentName)
+                            </td>
+                            <td>
+                                @Html.DisplayFor(modelItem => item.Owner.FirstName)
+                            </td>
+                            <td>
+                                @Html.ActionLink("Download", "Download", new { documentId = item.Id })
+                            </td>
+                        </tr>
+                    }
+                </tbody>
+            </table>
+        </div>
+    }
+</div>
